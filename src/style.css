@@ -1,0 +1,138 @@
+:root {
+  --accent: #4caf50;
+  --accent-dark: #3d8b40;
+  --border: #ddd;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #f6f6f6;
+  color: #1d1d1d;
+}
+
+.inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--accent);
+  padding: 0.75rem 1rem 0.5rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.app-header h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+#search {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem; /* 16px minimum prevents iOS zoom-on-focus */
+  border: none;
+  border-radius: 6px;
+}
+
+.status {
+  min-height: 1.1rem;
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.status.error {
+  color: #ffe082;
+  font-weight: 600;
+}
+
+.results {
+  padding: 0.75rem 1rem;
+}
+
+.hint,
+.no-results {
+  padding: 1rem 0.25rem;
+  color: #666;
+  font-style: italic;
+}
+
+.result-note {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+th,
+td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  white-space: nowrap;
+}
+
+thead th {
+  background: #f2f2f2;
+  font-weight: 600;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.error-box {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: #b00020;
+}
+
+.error-detail {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.error-box button {
+  margin-top: 0.75rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.error-box button:hover {
+  background: var(--accent-dark);
+}

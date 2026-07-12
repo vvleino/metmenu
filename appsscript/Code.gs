@@ -1,55 +1,39 @@
-// 1. Serves the HTML frontend when someone visits the web app URL
+// MetMenu JSON API.
+// Deployed as a web app (Execute as: Me, Who has access: Anyone), this returns
+// the full contents of every tab in the bound spreadsheet as JSON:
+//   { generatedAt, headers: ["Sheet Name", ...row-1 headers], rows: [[sheetName, ...cells], ...] }
+// The PWA fetches this once and does all searching client-side.
 function doGet() {
-    return HtmlService.createTemplateFromFile('Index')
-    .evaluate()
-    .setTitle('MetMenu')
-    .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-}
+    const sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
 
-// 2. Searches ALL sheets in the document for a specific query
-function searchData(searchQuery) {
-    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-    const sheets = spreadsheet.getSheets(); // Gets all tabs in the document
+    let headers = [];
+    let rows = [];
 
-    let allResults = [];
-    let mainHeaders = [];
-    let isFirstSheet = true;
-
-    // Loop through every sheet in the document
     sheets.forEach(sheet => {
-        const data = sheet.getDataRange().getValues();
-
-        // Skip completely empty tabs to prevent errors
+        // Display values: the formatted strings the user sees in the sheet,
+        // so numbers/dates serialize predictably.
+        const data = sheet.getDataRange().getDisplayValues();
         if (data.length === 0) return;
 
-        // Assumes row 1 contains headers
-        const headers = data[0];
-        const rows = data.slice(1);
-
-        // Set up the headers for the results table (only need to do this once)
-        if (isFirstSheet) {
-            // Add a 'Sheet Name' column to the front of the headers
-            mainHeaders = ["Sheet Name", ...headers];
-            isFirstSheet = false;
+        // Row 1 of each tab is its header row; all tabs are assumed to share
+        // the first non-empty tab's column layout.
+        if (headers.length === 0) {
+            headers = ["Sheet Name", ...data[0]];
         }
 
-        // Filter rows based on whether any cell matches the search query
-        const filteredRows = rows.filter(row => {
-            return row.some(cell => {
-                return String(cell).toLowerCase().includes(searchQuery.toLowerCase());
-            });
+        const sheetName = sheet.getName();
+        data.slice(1).forEach(row => {
+            rows.push([sheetName, ...row]);
         });
-
-        // Add the specific sheet's name to the beginning of each matched row
-        const rowsWithSheetName = filteredRows.map(row => [sheet.getName(), ...row]);
-
-        // Combine this sheet's results with the master list
-        allResults = allResults.concat(rowsWithSheetName);
     });
 
-    return {
-        headers: mainHeaders,
-        results: allResults
+    const payload = {
+        generatedAt: new Date().toISOString(),
+        headers: headers,
+        rows: rows
     };
+
+    return ContentService
+        .createTextOutput(JSON.stringify(payload))
+        .setMimeType(ContentService.MimeType.JSON);
 }

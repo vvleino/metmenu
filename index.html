@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#4CAF50" />
+  <meta name="description" content="Metioniinipitoisuuksien hakusovellus" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="MetMenu" />
+  <title>MetMenu – Metioniinihaku</title>
+</head>
+<body>
+  <header class="app-header">
+    <div class="inner">
+      <h1>Metioniinihaku</h1>
+      <input id="search" type="search" placeholder="Hae…" inputmode="search"
+             autocomplete="off" autocapitalize="off" spellcheck="false" />
+      <div id="status" class="status" role="status"></div>
+    </div>
+  </header>
+  <main class="results">
+    <div id="results" class="inner"></div>
+  </main>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
