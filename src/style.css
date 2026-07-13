@@ -111,6 +111,21 @@ tbody tr:nth-child(even) {
   background: #fafafa;
 }
 
+.cell-primary {
+  font-weight: 600;
+}
+
+.cell-secondary {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+th .cell-primary,
+th .cell-secondary {
+  font-weight: 600;
+  color: inherit;
+}
+
 .error-box {
   padding: 1.5rem 1rem;
   text-align: center;
